@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react'
-import { ImageIcon, UploadCloud, X, Send } from 'lucide-react'
+import { ImageIcon, UploadCloud, X, Send, ChevronLeft } from 'lucide-react'
 import axios from 'axios'
 import toast,{ Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Back from '../components/Back';
 const MAX_SIZE_MB = 5
 const MAX_CAPTION_LEN = 500
 const ACCEPTED_TYPES = ['image/png', 'image/jpeg', 'image/webp']
@@ -16,7 +18,7 @@ export default function CreatePost() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const inputRef = useRef(null)
-
+const navigate = useNavigate()
   const handleFile = (file) => {
     if (!file) return
     setError('')
@@ -98,7 +100,8 @@ export default function CreatePost() {
       <Toaster
   position="top-left"
   reverseOrder={false}
-/>
+/>       <Back onClick={()=> navigate(-1)} className={'absolute left-4 top-4'}/>
+
       <form
         onSubmit={handleSubmit}
         className="relative w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/60 p-8"

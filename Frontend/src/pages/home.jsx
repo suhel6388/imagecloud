@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
-import { Search, Loader2, ImageOff, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, Loader2, ImageOff, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import PostCard from '../components/Postcard'
-
+import { useNavigate } from "react-router-dom";
+import Back from '../components/Back';
 // Change this to your real endpoint (must return { post: [...] }).
 const POSTS_ENDPOINT = 'http://localhost:3000/posts'
 
@@ -70,16 +71,18 @@ const Home = () => {
     setPage(nextPage)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10">
+   
       <div className="max-w-6xl mx-auto">
+  <Back onClick={()=> navigate(-1)}/>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900">Posts</h1>
           <p className="text-slate-500 mt-1">Browse, search, and download shared posts.</p>
         </div>
-
+          <div className='w-full flex justify-between items-center'>
         {/* Search */}
         <div className="relative max-w-md mb-8">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -91,7 +94,15 @@ const Home = () => {
             className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
           />
         </div>
-
+            <button
+      type="button"
+      onClick={()=> navigate("/create-post")}
+      className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold px-5 py-2.5 text-sm shadow-sm shadow-blue-300 transition-colors"
+    >
+      <Plus className="h-4 w-4" strokeWidth={2.5} />
+      Create Post
+    </button>
+</div>
         {/* Loading state */}
         {loading && (
           <div className="flex flex-col items-center justify-center py-24 text-slate-400 gap-3">
